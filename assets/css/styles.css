@@ -9,6 +9,7 @@ body {
   margin: 0;
 }
 
+/* CSS for sidebar area */
 .sidebar {
   flex: 1;
   background-image: url(https://images.unsplash.com/photo-1585202900225-6d3ac20a6962?q=80&w=1862&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
@@ -19,27 +20,30 @@ body {
   position: relative;
 }
 
-.sign-up {
-  flex: 2;
-}
-
-.logo,
+.logo-area,
 .photo-credit {
   color: #fff;
   text-align: center;
 }
 
+.logo-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
 .logo {
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
-  top: 20vh;
+  height: 6rem;
+  width: 100%;
   background-color: rgb(0 0 0 / 0.6);
 }
 
 .logo-img {
-  height: 3rem;
+  margin: 0;
+  height: auto;
   width: auto;
 }
 
@@ -49,7 +53,15 @@ body {
 }
 
 .logo-text > h1 {
-  font-size: 3rem;
+  margin: 0;
+  font-size: 4rem;
+}
+
+.photo-credit {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 
 .photo-credit > p {
@@ -63,4 +75,77 @@ body {
 
 .photo-credit a:hover {
   text-decoration: none;
+}
+
+/* CSS for the form area */
+.sign-up {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.intro,
+.sign-up-form,
+.submit,
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro,
+.submit {
+  flex: 1;
+  background-color: lightgrey;
+}
+
+.intro {
+  justify-content: center;
+}
+
+.intro-text {
+  width: 55ch;
+}
+
+.intro-text > p,
+.slogan {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.intro-text > p
+{
+  padding: 2rem 0 1rem 4rem;
+}
+
+
+.sign-up-form {
+  flex: 1;
+  justify-content: center;
+  background-color: #fff;
+  padding-left: 2rem;
+}
+
+.slogan {
+  margin-bottom: 1rem;
+}
+
+form {
+  gap: 0.5rem;
+}
+
+form > div {
+  display: flex;
+  justify-content: left;
+  gap: 2rem;
+}
+
+form > div > div {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 0.75rem;
 }
