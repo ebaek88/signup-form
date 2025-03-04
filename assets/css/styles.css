@@ -104,6 +104,7 @@ form {
 
 .intro-text {
   width: 55ch;
+  padding-left: 2rem;
 }
 
 .intro-text > p,
@@ -112,12 +113,6 @@ form {
   font-size: 1.125rem;
   font-weight: 700;
 }
-
-.intro-text > p
-{
-  padding: 2rem 0 1rem 4rem;
-}
-
 
 .sign-up-form {
   flex: 1;
@@ -149,3 +144,55 @@ form > div > div {
 label {
   font-size: 0.75rem;
 }
+
+input {
+  border-color: #E5E7EB;
+  border-radius: 6px;
+}
+
+input:focus {
+  border-color: blue;
+  box-shadow: 5px 5px 5px grey;
+}
+
+input:valid {
+  border-color: green;
+}
+
+input:invalid {
+  border-color: red;
+}
+
+.error {
+  color: red;
+  font-size: 0.7rem;
+}
+
+/* CSS for the submit area */
+.submit {
+  align-items: flex-start;
+  padding-left: 2rem;
+}
+
+.submit > button {
+  margin-top: 1.5rem;
+  padding: 6px 40px;
+  background-color: #596D48;
+  color: white;
+  border-radius: 8px;
+}
+
+.submit > button:hover {
+  cursor: pointer;
+}
+
+.submit a:link,
+.submit a:visited {
+  color: #596D48;
+  font-weight: bold;
+}
+
+.submit a:hover {
+  text-decoration: none;
+}
+
