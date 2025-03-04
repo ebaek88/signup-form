@@ -9,7 +9,7 @@
   </head>
   <body>
     <!-- sidebar -->
-    <div class="sidebar">
+    <section class="sidebar">
       <!-- area for the logo and the logo text -->
       <div class="logo-area">
         <div class="logo">
@@ -27,9 +27,9 @@
           Photo by <a href="https://unsplash.com/ko/@haliewestphoto?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Halie West</a> on <a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%ED%81%B4%EB%A1%9C%EC%A6%88%EC%97%85-%EC%82%AC%EC%A7%84%EC%9D%98-%EB%85%B9%EC%83%89-%EC%9E%8E-%EC%8B%9D%EB%AC%BC-25xggax4bSA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
         </p>
       </div>
-    </div>
+    </section>
     <!-- main content -->
-    <div class="sign-up">
+    <section class="sign-up">
       <!-- intro area -->
       <div class="intro">
         <div class="intro-text">
@@ -57,12 +57,18 @@
           <div class="contact">
             <div class="email">
               <label for="email">EMAIL<span aria-label="required">*</span></label>
-              <input type="email" id="email" name="email" />
+              <input type="email" id="email" name="email" required/>
               <span class="error"></span>
             </div>
             <div class="phone-number">
               <label for="phone-number">PHONE NUMBER</label>
-              <input type="tel" id="phone-number" name="phone-number" />
+              <!-- the telephone number will accept international numbers. The numbers can be separated by either space, ".", or "-" -->
+              <input type="tel" 
+                id="phone-number" 
+                name="phone-number" 
+                pattern="^(\+?\d{0,3})([ \.\-\x29]?)(\d{1,3})([ \.\-]?)(\d{3,4})([ \.\-]?)(\d{3,4})$"
+                placeholder="+1-888-123.4567" 
+              />
               <span class="error"></span>
             </div>
           </div>
@@ -70,8 +76,20 @@
           <div class="pwd">
             <div class="password">
               <label for="password">PASSWORD<span aria-label="required">*</span></label>
-              <input type="password" id="password" name="password" required />
-              <span class="error"></span>
+              <input type="password" 
+                id="password" 
+                name="password" 
+                minlength="8" 
+                maxlength="16"
+                pattern="[A-Z]+[0-9]+[^a-zA-Z0-9]+" 
+                required 
+              />
+              <span class="error">
+                <p id="char-length">&#10060; Min 8 max 16 characters</p>
+                <p id="uppercase">&#10060; At least one uppercase</p>
+                <p id="number">&#10060; At least one number</p>
+                <p id="special-char">&#10060; At least one special character</p>
+              </span>
             </div>
             <div class="confirm-password">
               <label for="confirm-password">CONFIRM PASSWORD<span aria-label="required">*</span></label>
@@ -86,6 +104,6 @@
         <button type="submit" form="sign-up" id="submit-button">Create Account</button>
         <p>Already have an account? <a href="">Log in</a></p>
       </div>
-    </div>
+    </section>
   </body>
 </html>

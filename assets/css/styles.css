@@ -168,6 +168,10 @@ input:invalid {
   font-size: 0.7rem;
 }
 
+.error > p {
+  margin: 0;
+}
+
 /* CSS for the submit area */
 .submit {
   align-items: flex-start;
