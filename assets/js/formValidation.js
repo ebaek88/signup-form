@@ -8,14 +8,38 @@ const password = document.querySelector("#password");
 const confirmPassword = document.querySelector("#confirm-password");
 const submitButton = document.querySelector("#submit-button");
 
-const inputElements = [firstName, lastName, email, phoneNumber, password, confirmPassword];
+// elements for where error messages go
+const charLengthErrorText = document.querySelector(".error #char-length");
+const uppercaseErrorText = document.querySelector(".error #uppercase");
+const numberErrorText = document.querySelector(".error #number");
+const specialCharErrorText = document.querySelector(".error #special-char");
+
+// regex to check validity for password
+const uppercaseRegex = /[A-Z]/;
+const numberRegex = /[0-9]/;
+const specialCharRegex = /[^a-zA-Z0-9]/;
+
+// function that updates error messages for password validity
+function updateError(element, isValid, message) {
+  element.style.color = isValid ? "#596D48" : "red";
+  element.textContent = (isValid ? "\u2705 " : "\u274C ") + message;
+}
+
+const inputElements = [
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  password,
+  confirmPassword,
+];
 
 // adding events
 
-// when the form is submitted, the whole form should be valiadated
+// when the form is submitted, the whole form should be validated
 form.addEventListener("submit", (evt) => {
-  inputElements.forEach(elem => {
-    if(!elem.validity.valid) {
+  inputElements.forEach((elem) => {
+    if (!elem.validity.valid) {
       evt.preventDefault();
     }
   });
@@ -24,7 +48,7 @@ form.addEventListener("submit", (evt) => {
 // checking if the names are left blank
 firstName.addEventListener("focusout", (evt) => {
   const firstNameError = document.querySelector("#first-name + span.error");
-  if(firstName.validity.valueMissing) {
+  if (firstName.validity.valueMissing) {
     firstNameError.textContent = "You need to fill out your first name.";
   } else {
     firstNameError.textContent = "";
@@ -33,7 +57,7 @@ firstName.addEventListener("focusout", (evt) => {
 
 lastName.addEventListener("focusout", (evt) => {
   const lastNameError = document.querySelector("#last-name + span.error");
-  if(lastName.validity.valueMissing) {
+  if (lastName.validity.valueMissing) {
     lastNameError.textContent = "You need to fill out your last name.";
   } else {
     lastNameError.textContent = "";
@@ -42,9 +66,9 @@ lastName.addEventListener("focusout", (evt) => {
 
 email.addEventListener("focusout", (evt) => {
   const emailError = document.querySelector("#email + span.error");
-  if(email.validity.valueMissing) {
+  if (email.validity.valueMissing) {
     emailError.textContent = "You need to fill out your email address.";
-  } else if(email.validity.typeMismatch) {
+  } else if (email.validity.typeMismatch) {
     emailError.textContent = "The email you entered is in a wrong format.";
   } else {
     emailError.textContent = "";
@@ -53,46 +77,93 @@ email.addEventListener("focusout", (evt) => {
 
 phoneNumber.addEventListener("input", (evt) => {
   const phoneNumberError = document.querySelector("#phone-number + span.error");
-  if(phoneNumber.validity.patternMismatch) {
-    phoneNumberError.textContent = "You need to enter the number in a correct format.";
+  if (phoneNumber.validity.patternMismatch) {
+    phoneNumberError.textContent =
+      "You need to enter the number in a correct format.";
   } else {
     phoneNumberError.textContent = "";
   }
 });
 
-password.addEventListener("input", (evt) => {
-  // checks for min-max length
-  if(!(password.validity.tooShort || password.validity.tooLong)) {
-    const errorText = document.querySelector(".error #char-length");
-    errorText.style.color = "#596D48";
-    errorText.textContent = "\u2705 Min 8 max 16 characters";
+// password.addEventListener("input", (evt) => {
+//   const charLengthErrorText = document.querySelector(".error #char-length");
+//   const uppercaseErrorText = document.querySelector(".error #uppercase");
+//   const numberErrorText = document.querySelector(".error #number");
+//   const specialCharErrorText = document.querySelector(".error #special-char");
+
+//   // checks for min-max length, including the case when the password is empty
+//   if (password.validity.valueMissing) {
+//     charLengthErrorText.style.color = "red";
+//     charLengthErrorText.textContent = "\u274C Min 8 max 16 characters";
+//   } else if (!(password.validity.tooShort || password.validity.tooLong)) {
+//     charLengthErrorText.style.color = "#596D48";
+//     charLengthErrorText.textContent = "\u2705 Min 8 max 16 characters";
+//   } else {
+//     charLengthErrorText.style.color = "red";
+//     charLengthErrorText.textContent = "\u274C Min 8 max 16 characters";
+//   }
+
+//   // checks for uppercase
+//   const uppercase = new RegExp("[A-Z]");
+//   if (uppercase.test(password.value)) {
+//     uppercaseErrorText.style.color = "#596D48";
+//     uppercaseErrorText.textContent = "\u2705 At least one uppercase";
+//   } else {
+//     uppercaseErrorText.style.color = "red";
+//     uppercaseErrorText.textContent = "\u274C At least one uppercase";
+//   }
+
+//   // checks for a number
+//   const number = new RegExp("[0-9]");
+//   if (number.test(password.value)) {
+//     numberErrorText.style.color = "#596D48";
+//     numberErrorText.textContent = "\u2705 At least one number";
+//   } else {
+//     numberErrorText.style.color = "red";
+//     numberErrorText.textContent = "\u274C At least one number";
+//   }
+
+//   // checks for a special character
+//   const specialCharacter = new RegExp("[^a-zA-Z0-9]");
+//   if (specialCharacter.test(password.value)) {
+//     specialCharErrorText.style.color = "#596D48";
+//     specialCharErrorText.textContent = "\u2705 At least one special character";
+//   } else {
+//     specialCharErrorText.style.color = "red";
+//     specialCharErrorText.textContent = "\u274C At least one special character";
+//   }
+// });
+
+password.addEventListener("input", () => {
+  // check for min-max length
+  if (password.validity.valueMissing) {
+    updateError(charLengthErrorText, false, "Min 8 max 16 characters");
+  } else {
+    updateError(
+      charLengthErrorText,
+      !(password.validity.tooShort || password.validity.tooLong),
+      "Min 8 max 16 characters"
+    );
   }
 
-  // need to consider else for when the character is deleted and it does not qualify again
-  // is backspace considered an "input" event?
+  // check for uppercase character
+  updateError(
+    uppercaseErrorText,
+    uppercaseRegex.test(password.value),
+    "At least one uppercase"
+  );
 
-  // checks for uppercase
-  const uppercase = new RegExp("[A-Z]");
-  if(uppercase.test(password.value)) {
-    const errorText = document.querySelector(".error #uppercase");
-    errorText.style.color = "#596D48";
-    errorText.textContent = "\u2705 At least one uppercase";
-  }
+  // check for number
+  updateError(
+    numberErrorText,
+    numberRegex.test(password.value),
+    "At least one number"
+  );
 
-  // checks for a number
-  const number = new RegExp("[0-9]");
-  if(number.test(password.value)) {
-    const errorText = document.querySelector(".error #number");
-    errorText.style.color = "#596D48";
-    errorText.textContent = "\u2705 At least one number";
-  }
-
-  // checks for a special character
-  const specialCharacter = new RegExp("[^a-zA-Z0-9]");
-  if(specialCharacter.test(password.value)) {
-    const errorText = document.querySelector(".error #special-char");
-    errorText.style.color = "#596D48";
-    errorText.textContent = "\u2705 At least one special character";
-  }
-
+  // check for special character
+  updateError(
+    specialCharErrorText,
+    specialCharRegex.test(password.value),
+    "At least one special character"
+  );
 });
